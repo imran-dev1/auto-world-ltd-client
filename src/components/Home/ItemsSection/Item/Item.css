@@ -1,0 +1,6 @@
+.item:hover .item-thumbnail{
+    transform: scale(1.1);
+}
+.item:hover .overlay{
+    opacity:1;
+}
