@@ -16,7 +16,7 @@ const Banner = () => {
                   </p>
                   <p className="text-xl mt-10 mb-5">*You need the authentication to manage auto world inventories!</p>
           <Link
-            className="bg-indigo-800 hover:bg-indigo-700 text-white py-2 px-3 rounded-lg inline-block"
+            className="bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-3 rounded-lg inline-block"
             to="/my-items"
           >
             Login <MdLogin className="float-right mt-1 ml-1 text-lg"></MdLogin>

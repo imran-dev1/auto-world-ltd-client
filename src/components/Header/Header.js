@@ -40,7 +40,7 @@ const Header = () => {
               visible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-3 hidden md:flex"
-            } md:translate-y-0 px-5 py-10 md:p-0 rounded w-52 shadow-lg md:shadow-none  md:w-auto transition-all bg-[#ffffffeb] backdrop-blur-sm md:bg-transparent absolute right-0 top-10 md:static md:opacity-100 flex flex-col md:flex-row items-start justify-right gap-4 md:gap-8 md:text-slate-400 text-black`}
+            } md:translate-y-0 px-5 py-10 md:p-0 rounded w-56 shadow-lg md:shadow-none  md:w-auto transition-all bg-[#ffffffeb] backdrop-blur-sm md:bg-transparent absolute right-0 top-10 md:static md:opacity-100 flex flex-col md:flex-row items-start justify-right gap-6 md:gap-8 text-lg md:text-md md:text-slate-400 text-black`}
           >
             <li>
               <NavLink
@@ -103,7 +103,7 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                className="bg-indigo-800 hover:bg-indigo-700 text-white py-2 px-3 rounded-lg"
+                className="bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-3 rounded-lg"
                 to="/my-items"
               >
                 Sign Up

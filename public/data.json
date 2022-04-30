@@ -52,5 +52,23 @@
     "quantity": "59",
     "supplier_name": "Imran Khan",
     "thumbnail": "https://demo.vehica.com/wp-content/uploads/2020/02/audi1.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Audi A4 4-door sedan blue",
+    "description": "How the adventure ended will be seen anon. Aouda was anxious, though she said nothing. As for Passepartout, he thought Mr. Fogg’s manoeuvre simply glorious. The captain had said “between eleven and twelve knots,” and the Henrietta confirmed his prediction.",
+    "price": "23,000",
+    "quantity": "59",
+    "supplier_name": "Imran Khan",
+    "thumbnail": "https://demo.vehica.com/wp-content/uploads/2020/02/audi1.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Audi A4 4-door sedan blue",
+    "description": "How the adventure ended will be seen anon. Aouda was anxious, though she said nothing. As for Passepartout, he thought Mr. Fogg’s manoeuvre simply glorious. The captain had said “between eleven and twelve knots,” and the Henrietta confirmed his prediction.",
+    "price": "23,000",
+    "quantity": "59",
+    "supplier_name": "Imran Khan",
+    "thumbnail": "https://demo.vehica.com/wp-content/uploads/2020/02/audi1.jpg"
   }
 ]
