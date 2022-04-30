@@ -1,13 +1,14 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Switch } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
 
 function App() {
   return (
     <div>
       <Header></Header>
       <Routes>
-        <Route></Route>
+        <Route path="/" element={<Home></Home>}></Route>
       </Routes>
     </div>
   );

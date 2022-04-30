@@ -3,13 +3,14 @@
 @tailwind utilities;
 
 /* Font  */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;800&display=swap");
 
 body {
   margin: 0;
   background-color: #ecf4ff;
-  font-family: "Poppins", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: 16px;
+  font-weight: 600;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
