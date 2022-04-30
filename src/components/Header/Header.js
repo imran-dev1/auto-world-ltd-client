@@ -25,7 +25,7 @@ const Header = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="logo">
           <NavLink to="/">
-            <img src={logo} alt="" style={{ maxWidth: "150px" }} />
+            <img src={logo} alt="" style={{ maxWidth: "120px" }} />
           </NavLink>
         </div>
         <div className="navigation relative">
@@ -46,8 +46,8 @@ const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white flex items-center gap-1"
-                    : "hover:text-white flex items-center gap-1"
+                    ? "md:text-white flex items-center gap-1"
+                    : "md:hover:text-white flex items-center gap-1"
                 }
                 to="/add-item"
               >
@@ -58,8 +58,8 @@ const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white flex items-center gap-1"
-                    : "hover:text-white flex items-center gap-1"
+                    ? "md:text-white flex items-center gap-1"
+                    : "md:hover:text-white flex items-center gap-1"
                 }
                 to="/manage-inventories"
               >
@@ -71,8 +71,8 @@ const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white flex items-center gap-1"
-                    : "hover:text-white flex items-center gap-1"
+                    ? "md:text-white flex items-center gap-1"
+                    : "md:hover:text-white flex items-center gap-1"
                 }
                 to="/my-items"
               >
@@ -85,8 +85,8 @@ const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white flex items-center gap-1"
-                    : "hover:text-white flex items-center gap-1"
+                    ? "md:text-white flex items-center gap-1"
+                    : "md:hover:text-white flex items-center gap-1"
                 }
                 to="/login"
               >
