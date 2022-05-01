@@ -5,7 +5,7 @@ import { itemsContextApi } from "../../../App";
 import Item from "./Item/Item";
 
 const ItemsSection = () => {
-  const items = useContext(itemsContextApi);
+  const [items,] = useContext(itemsContextApi);
   const sixItems = items.slice(0, 6);
 
   return (

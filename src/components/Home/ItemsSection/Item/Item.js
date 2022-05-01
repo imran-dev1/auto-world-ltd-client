@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { itemsContextApi } from "../../../../App";
 import "./Item.css";
 
 const Item = (props) => {
-  const { name, price, thumbnail, quantity, supplier_name } = props.item;
+  const { id, name, price, thumbnail, quantity, supplier_name } = props.item;
+  const [, handleUpdate] = useContext(itemsContextApi);
   return (
     <div className="item shadow-xl rounded-lg">
       <div className=" h-40 bg-cover bg-no-repeat bg-center rounded-t-lg bg-black/30 bg-blend-overlay overflow-hidden relative">
@@ -21,8 +23,13 @@ const Item = (props) => {
         <h2 className="text-3xl py-2">${price}</h2>
 
         <div className="flex items-center justify-between border-t border-slate-700 pt-2 text-slate-400 text-sm">
-                  <h4>Available: {quantity}</h4>
-                  <button className="bg-indigo-700 hover:bg-indigo-600 text-white p-1 rounded">Stock Update</button>
+          <h4>Available: {quantity}</h4>
+          <button
+            onClick={() => handleUpdate(id)}
+            className="bg-indigo-700 hover:bg-indigo-600 text-white p-1 rounded"
+          >
+            Stock Update
+          </button>
         </div>
       </div>
     </div>

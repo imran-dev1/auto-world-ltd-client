@@ -6,7 +6,7 @@ import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 
 const ManageInventories = () => {
   const [popupShow, setPopupShow] = useState(false);
-  const items = useContext(itemsContextApi);
+  const [items,] = useContext(itemsContextApi);
 
   const confirmPopUp = () => setPopupShow(!popupShow);
   console.log(popupShow);
