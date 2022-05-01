@@ -1,9 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { itemsContextApi } from "../../App";
+import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 
 const ManageInventories = () => {
+  const [popupShow, setPopupShow] = useState(false);
   const items = useContext(itemsContextApi);
+
+  const confirmPopUp = () => setPopupShow(!popupShow);
+  console.log(popupShow);
+
   return (
     <div className="py-16 px-3">
       <div className="container mx-auto">
@@ -12,9 +19,11 @@ const ManageInventories = () => {
             Manage Inventories
           </h2>
           <div className="flex items-center gap-1 justify-end">
-            <button className="flex items-center gap-1 bg-white hover:shadow-xl hover:bg-[#394150] hover:text-white py-2 px-3 rounded-lg shadow-md">
-              Add New Item <AiOutlinePlus className="text-xl"></AiOutlinePlus>
-            </button>
+            <Link to="/add-item">
+              <button className="flex items-center gap-1 bg-white hover:shadow-xl hover:bg-[#394150] hover:text-white py-2 px-3 rounded-lg shadow-md">
+                Add New Item <AiOutlinePlus className="text-xl"></AiOutlinePlus>
+              </button>
+            </Link>
           </div>
         </div>
         <div className="mt-10">
@@ -63,7 +72,10 @@ const ManageInventories = () => {
                     <td className="px-6 py-4">${item.price}</td>
                     <td className="px-6 py-4">{item.quantity}</td>
                     <td className="px-6 py-4 text-center">
-                      <button className="text-black hover:scale-110 bg-[#efefef] hover:bg-[#cedefd] p-2 rounded-full">
+                      <button
+                        onClick={confirmPopUp}
+                        className="text-black hover:scale-110 bg-[#efefef] hover:bg-[#cedefd] p-2 rounded-full"
+                      >
                         <AiOutlineDelete className="text-2xl"></AiOutlineDelete>
                       </button>
                     </td>
@@ -71,10 +83,16 @@ const ManageInventories = () => {
                 ))}
               </tbody>
             </table>
+            {popupShow ? (
+              <DeleteConfirmation
+                setPopupShow={setPopupShow}
+              ></DeleteConfirmation>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5"></div>
     </div>
   );
 };

@@ -104,7 +104,7 @@ const Header = () => {
             <li>
               <NavLink
                 className="bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-3 rounded-lg"
-                to="/my-items"
+                to="/sign-up"
               >
                 Sign Up
               </NavLink>
