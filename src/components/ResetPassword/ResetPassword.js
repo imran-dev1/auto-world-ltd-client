@@ -1,39 +1,30 @@
 import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { BsArrowLeft } from "react-icons/bs";
-import {
-  useAuthState,
-  useSignInWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
-import auth from "../../firebase.init";
-import Loading from "../Loading/Loading";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
+import { BsArrowLeft } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import auth from "../../firebase.init";
 
 const ResetPassword = () => {
-  //   const [user] = useAuthState(auth);
+  const [sendPasswordResetEmail, sending, error] =
+    useSendPasswordResetEmail(auth);
   const {
     register,
-    handleSubmit,
+    handleSubmit,reset,
     formState: { errors },
   } = useForm();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-  //   const [signInWithEmailAndPassword, , loading, loginError] =
-  //     useSignInWithEmailAndPassword(auth);
 
-  const handleLogin = (data) => {
-    const { email, password } = data;
-    // signInWithEmailAndPassword(email, password);
+  const handleResetPassword = (data) => {
+    const { email } = data;
+      sendPasswordResetEmail(email); 
+      reset();
+    toast.success("Please check your inbox to reset password!");
   };
-
-  //   if (user) {
-  //     navigate(from, { replace: true });
-  //   }
-  //   if (loading) {
-  //     return <Loading></Loading>;
-  //   }
+    if (error) {
+        return <p>Error: {error.message}</p>
+    }
   return (
     <div className="px-3">
       <div className="container mx-auto flex flex-col lg:flex-row justify-center items-end md:gap-20">
@@ -41,17 +32,12 @@ const ResetPassword = () => {
           <div className="mb-10 text-center">
             <h1 className="text-3xl">Reset Password</h1>
           </div>
-          
+          <ToastContainer></ToastContainer>
           <form
-            onSubmit={handleSubmit(handleLogin)}
+            onSubmit={handleSubmit(handleResetPassword)}
             action=""
             className="text-right flex flex-col gap-2"
           >
-            {/* {loginError && (
-              <p className="text-red-400 text-left ml-5">
-                Please check email & password
-              </p>
-            )} */}
             <input
               {...register("email", { required: "Email is required!" })}
               className="py-3 px-5 border-none focus:outline-0 outline-none bg-[#deecff] text-black rounded w-full"
@@ -60,7 +46,7 @@ const ResetPassword = () => {
               placeholder="Your Email..."
             />
             {errors.email?.message && (
-              <p className="text-red-400 text-left ml-5">
+              <p className="text-red-500 text-left">
                 {errors.email?.message}
               </p>
             )}
@@ -75,7 +61,7 @@ const ResetPassword = () => {
             <input
               className="cursor-pointer bg-indigo-700 hover:bg-indigo-600 hover:shadow-md text-white px-6 py-3 rounded-full"
               type="submit"
-              value="Reset"
+              value={sending ? "Sending..." : "Reset"}
             />
           </form>
         </div>

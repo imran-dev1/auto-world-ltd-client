@@ -5,19 +5,19 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { CgClose } from "react-icons/cg";
 import { AiOutlinePlus, AiOutlineUnorderedList } from "react-icons/ai";
 import { MdOutlineInventory, MdLogin } from "react-icons/md";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// import auth from "../../firebase.init";
-// import { signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
   const handleMobileMenu = () => {
     setVisible(!visible);
   };
-  //   const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const logout = () => {
-    // signOut(auth);
+    signOut(auth);
     navigate("/login");
   };
   return (
@@ -40,14 +40,14 @@ const Header = () => {
               visible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-3 hidden md:flex"
-            } md:translate-y-0 px-5 py-10 md:p-0 rounded w-56 shadow-lg md:shadow-none  md:w-auto transition-all bg-[#ffffffeb] backdrop-blur-sm md:bg-transparent absolute right-0 top-10 md:static md:opacity-100 flex flex-col md:flex-row items-start justify-right gap-6 md:gap-8 text-lg md:text-md md:text-slate-400 text-black`}
+            } md:translate-y-0 px-5 py-10 md:p-0 rounded w-56 shadow-lg md:shadow-none  md:w-auto transition-all bg-[#ffffffeb] backdrop-blur-sm md:bg-transparent absolute right-0 top-10 md:static md:opacity-100 flex flex-col md:flex-row items-start justify-right gap-6 md:gap-8 text-md font-normal md:text-white text-black`}
           >
             <li>
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "md:text-white flex items-center gap-1"
-                    : "md:hover:text-white flex items-center gap-1"
+                    ? "md:text-indigo-400 flex items-center gap-1"
+                    : "md:hover:text-indigo-400 flex items-center gap-1"
                 }
                 to="/add-item"
               >
@@ -58,8 +58,8 @@ const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "md:text-white flex items-center gap-1"
-                    : "md:hover:text-white flex items-center gap-1"
+                    ? "md:text-indigo-400 flex items-center gap-1"
+                    : "md:hover:text-indigo-400 flex items-center gap-1"
                 }
                 to="/manage-inventories"
               >
@@ -71,8 +71,8 @@ const Header = () => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "md:text-white flex items-center gap-1"
-                    : "md:hover:text-white flex items-center gap-1"
+                    ? "md:text-indigo-400 flex items-center gap-1"
+                    : "md:hover:text-indigo-400 flex items-center gap-1"
                 }
                 to="/my-items"
               >
@@ -82,33 +82,37 @@ const Header = () => {
             </li>
 
             <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "md:text-white flex items-center gap-1"
-                    : "md:hover:text-white flex items-center gap-1"
-                }
-                to="/login"
-              >
-                Login
-                <MdLogin className="text-lg"></MdLogin>
-              </NavLink>
-
-              {/* <button
-                onClick={logout}
-                className="hover:text-indigo-800 hover:underline"
-              >
-                Logout
-              </button> */}
+              {user ? (
+                <button
+                  onClick={logout}
+                  className="hover:text-indigo-400 hover:underline"
+                >
+                  Logout
+                </button>
+              ) : (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "md:text-indigo-400 flex items-center gap-1"
+                      : "md:hover:text-indigo-400 flex items-center gap-1"
+                  }
+                  to="/login"
+                >
+                  Login
+                  <MdLogin className="text-lg"></MdLogin>
+                </NavLink>
+              )}
             </li>
-            <li>
-              <NavLink
-                className="bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-3 rounded-lg"
-                to="/sign-up"
-              >
-                Sign Up
-              </NavLink>
-            </li>
+            {!user && (
+              <li>
+                <NavLink
+                  className="bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-3 rounded-lg"
+                  to="/sign-up"
+                >
+                  Sign Up
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -1,10 +1,10 @@
 import React from "react";
-import BounceLoader from "react-spinners/BounceLoader";
+import { BarLoader, HashLoader } from "react-spinners";
 
 const Loading = () => {
   return (
-    <div className="flex w-100 -mt-24 justify-center items-center bg-[#021b29] min-h-screen">
-      <BounceLoader color="#0991b1" loading={true} size={50} />
+    <div className="flex w-100 -mt-24 justify-center items-center min-h-screen">
+      <BarLoader color="#0991b1" loading={true} height={4} width={100} />
     </div>
   );
 };
