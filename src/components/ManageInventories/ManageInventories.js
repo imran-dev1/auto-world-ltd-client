@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { itemsContextApi } from "../../App";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 
 const ManageInventories = () => {
   const [popupShow, setPopupShow] = useState(false);
-  const [items,] = useContext(itemsContextApi);
+  const [items, handleUpdate] = useContext(itemsContextApi);
 
   const confirmPopUp = () => setPopupShow(!popupShow);
   console.log(popupShow);
@@ -26,27 +27,30 @@ const ManageInventories = () => {
             </Link>
           </div>
         </div>
-        <div className="mt-10">
+        <p className=" order-3 md:-order-none text-gray-600 text-lg ">
+          {items.length} items
+        </p>
+        <div className="mt-2">
           <div className="relative overflow-x-auto shadow-lg sm:rounded-lg">
             <table className="w-full text-left text-gray-600">
               <thead className="text-sm text-white uppercase bg-[#394150]">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-4 md:px-6 py-3 min-w-[100px]">
                     Image
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-4 md:px-6 py-3 min-w-[250px]">
                     Item Name
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-4 md:px-6 py-3 min-w-[150px]">
                     Supplier
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-4 md:px-6 py-3 min-w-[100px]">
                     Price
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-4 md:px-6 py-3 min-w-[100px]">
                     Quantity
                   </th>
-                  <th scope="col" className="px-6 py-3 text-center">
+                  <th scope="col" className="px-4 md:px-6 py-3 min-w-[150px]">
                     Actions
                   </th>
                 </tr>
@@ -59,7 +63,7 @@ const ManageInventories = () => {
                   >
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium whitespace-nowrap"
+                      className="px-4 md:px-6 py-4 font-medium whitespace-nowrap"
                     >
                       <img
                         src={item.thumbnail}
@@ -67,14 +71,24 @@ const ManageInventories = () => {
                         className=" w-20 rounded-lg"
                       />
                     </th>
-                    <td className="px-6 py-4">{item.name}</td>
-                    <td className="px-6 py-4">{item.supplier_name}</td>
-                    <td className="px-6 py-4">${item.price}</td>
-                    <td className="px-6 py-4">{item.quantity}</td>
-                    <td className="px-6 py-4 text-center">
+                    <td className="px-4 md:px-6 py-4">{item.name}</td>
+                    <td className="px-4 md:px-6 py-4">{item.supplier_name}</td>
+                    <td className="px-4 md:px-6 py-4">${item.price}</td>
+                    <td className="px-4 md:px-6 py-4">{item.quantity}</td>
+                    <td className="px-4 md:px-6 py-4 text-center flex items-center gap-2">
+                      <button
+                        onClick={() => {
+                          handleUpdate(item.id);
+                        }}
+                        className="text-black bg-[#efefef] hover:bg-slate-700 hover:text-white p-2 rounded-full flex items-center gap-1 text-sm"
+                        title="Update Item"
+                      >
+                        <FiEdit3 className="text-2xl"></FiEdit3>
+                      </button>
                       <button
                         onClick={confirmPopUp}
-                        className="text-black hover:scale-110 bg-[#efefef] hover:bg-[#cedefd] p-2 rounded-full"
+                        className="text-black bg-red-200 hover:bg-red-300 p-2 rounded-full flex items-center gap-1 text-sm"
+                        title="Delete Item"
                       >
                         <AiOutlineDelete className="text-2xl"></AiOutlineDelete>
                       </button>
