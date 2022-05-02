@@ -7,7 +7,6 @@ import auth from "../../../firebase.init";
 
 const Banner = () => {
   const [user] = useAuthState(auth);
-  console.log(user);
   return (
     <div className="banner pt-24 pb-52 px-3">
       <div className="container mx-auto md:flex gap-20 justify-between text-white">
