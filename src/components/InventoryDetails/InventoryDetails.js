@@ -1,17 +1,19 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const InventoryDetails = () => {
   const [inventory, setInventory] = useState({});
-  const { id } = useParams();
+  console.log(inventory);
+  const { _id } = useParams();
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + "/data.json")
+    fetch(`http://localhost:4000/product/${_id}`)
       .then((res) => res.json())
       .then((data) => {
-        setInventory(data.find((item) => item.id === parseInt(id)));
+        setInventory(data);
       });
   }, []);
-  console.log(inventory);
+    
   return (
     <div className="pt-24 pb-24 px-3">
       <div className="container mx-auto" style={{ maxWidth: "1000px" }}>

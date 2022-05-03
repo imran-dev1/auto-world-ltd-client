@@ -1,16 +1,35 @@
-import React, { useContext, useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { itemsContextApi } from "../../App";
+import auth from "../../firebase.init";
 import DeleteConfirmation from "../ManageInventories/DeleteConfirmation/DeleteConfirmation";
 
 const MyItems = () => {
+  const [user] = useAuthState(auth);
+    const [myItems, setMyItems] = useState([]);
+  console.log(myItems);
   const [popupShow, setPopupShow] = useState(false);
-  const [items, handleUpdate] = useContext(itemsContextApi);
+  const [deleteId, setDeleteId] = useState("");
+  const [, handleUpdate] = useContext(itemsContextApi);
 
-  const confirmPopUp = () => setPopupShow(!popupShow);
-  console.log(popupShow);
+  const confirmPopUp = (id) => {
+    setPopupShow(!popupShow);
+    setDeleteId(id);
+  };
+
+  useEffect(() => {
+    const getMyItems = async () => {
+      const email = user.email;
+      const url = `http://localhost:4000/products?user_email=${email}`;
+      const { data } = await axios.get(url);
+      setMyItems(data);
+    };
+    getMyItems();
+  }, [user]);
 
   return (
     <div className="py-16 px-3">
@@ -29,7 +48,7 @@ const MyItems = () => {
           </div>
         </div>
         <p className=" order-3 md:-order-none text-gray-600 text-lg ">
-                  {items.length} items
+          {myItems.length} items
         </p>
         <div className="mt-2">
           <div className="relative overflow-x-auto shadow-lg sm:rounded-lg">
@@ -57,7 +76,7 @@ const MyItems = () => {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {myItems.map((item) => (
                   <tr
                     className="bg-white hover:bg-[#f2f8fe] border-b"
                     key={item.id}
@@ -79,7 +98,7 @@ const MyItems = () => {
                     <td className="px-4 md:px-6 py-4 text-center flex items-center gap-2">
                       <button
                         onClick={() => {
-                          handleUpdate(item.id);
+                          handleUpdate(item._id);
                         }}
                         className="text-black bg-[#efefef] hover:bg-slate-700 hover:text-white p-2 rounded-full flex items-center gap-1 text-sm"
                         title="Update Item"
@@ -87,7 +106,7 @@ const MyItems = () => {
                         <FiEdit3 className="text-2xl"></FiEdit3>
                       </button>
                       <button
-                        onClick={confirmPopUp}
+                        onClick={() => confirmPopUp(item.id)}
                         className="text-black bg-red-200 hover:bg-red-300 p-2 rounded-full flex items-center gap-1 text-sm"
                         title="Delete Item"
                       >

@@ -25,7 +25,7 @@ const ItemsSection = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-10">
           {sixItems.map((item) => (
-            <Item key={item.id} item={item}></Item>
+            <Item key={item._id} item={item}></Item>
           ))}
         </div>
       </div>

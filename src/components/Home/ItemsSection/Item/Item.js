@@ -3,7 +3,7 @@ import { itemsContextApi } from "../../../../App";
 import "./Item.css";
 
 const Item = (props) => {
-  const { id, name, price, thumbnail, quantity, supplier_name } = props.item;
+  const { _id, name, price, thumbnail, quantity, supplier_name } = props.item;
   const [, handleUpdate] = useContext(itemsContextApi);
   return (
     <div className="item shadow-xl rounded-lg">
@@ -25,7 +25,7 @@ const Item = (props) => {
         <div className="flex items-center justify-between border-t border-slate-700 pt-2 text-slate-400 text-sm">
           <h4>Available: {quantity}</h4>
           <button
-            onClick={() => handleUpdate(id)}
+            onClick={() => handleUpdate(_id)}
             className="bg-indigo-700 hover:bg-indigo-600 text-white p-1 rounded"
           >
             Stock Update

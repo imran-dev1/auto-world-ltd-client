@@ -78,7 +78,7 @@ const ManageInventories = () => {
                     <td className="px-4 md:px-6 py-4 text-center flex items-center gap-2">
                       <button
                         onClick={() => {
-                          handleUpdate(item.id);
+                          handleUpdate(item._id);
                         }}
                         className="text-black bg-[#efefef] hover:bg-slate-700 hover:text-white p-2 rounded-full flex items-center gap-1 text-sm"
                         title="Update Item"

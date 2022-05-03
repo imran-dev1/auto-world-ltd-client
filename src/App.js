@@ -19,15 +19,15 @@ export const itemsContextApi = createContext();
 function App() {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
-  const handleUpdate = (id) => {
-    navigate(`/inventory/${id}`);
+  const handleUpdate = (_id) => {
+    navigate(`/product/${_id}`);
   };
 
   useEffect(() => {
-    fetch(process.env.PUBLIC_URL + "/data.json")
+    fetch("http://localhost:4000/products")
       .then((res) => res.json())
       .then((data) => setItems(data));
-  }, []);
+  }, [items]);
   return (
     <div>
       <Header></Header>
@@ -55,7 +55,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/inventory/:id"
+            path="/product/:_id"
             element={<InventoryDetails></InventoryDetails>}
           ></Route>
           <Route path="/login" element={<Login></Login>}></Route>
