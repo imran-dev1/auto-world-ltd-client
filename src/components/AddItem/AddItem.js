@@ -39,8 +39,7 @@ const AddItem = () => {
       },
     })
       .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
+        .then((result) => {
         toast.success("Item Added");
         reset();
       });

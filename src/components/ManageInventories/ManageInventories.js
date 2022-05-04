@@ -2,18 +2,17 @@ import React, { useContext, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { itemsContextApi } from "../../App";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 
 const ManageInventories = () => {
-  const [popupShow, setPopupShow] = useState(false);
-  const [items, handleUpdate] = useContext(itemsContextApi);
-
-  const confirmPopUp = () => setPopupShow(!popupShow);
-  console.log(popupShow);
+  const [items, handleUpdate, , , deletePopup, , popupHandler] =
+    useContext(itemsContextApi);
 
   return (
     <div className="py-16 px-3">
+      <ToastContainer></ToastContainer>
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between items-center gap-2 mb-5">
           <h2 className="text-2xl md:text-4xl font-extrabold text-center">
@@ -59,7 +58,7 @@ const ManageInventories = () => {
                 {items.map((item) => (
                   <tr
                     className="bg-white hover:bg-[#f2f8fe] border-b"
-                    key={item.id}
+                    key={item._id}
                   >
                     <th
                       scope="row"
@@ -86,7 +85,7 @@ const ManageInventories = () => {
                         <FiEdit3 className="text-2xl"></FiEdit3>
                       </button>
                       <button
-                        onClick={confirmPopUp}
+                        onClick={() => popupHandler(item._id)}
                         className="text-black bg-red-200 hover:bg-red-300 p-2 rounded-full flex items-center gap-1 text-sm"
                         title="Delete Item"
                       >
@@ -97,13 +96,7 @@ const ManageInventories = () => {
                 ))}
               </tbody>
             </table>
-            {popupShow ? (
-              <DeleteConfirmation
-                setPopupShow={setPopupShow}
-              ></DeleteConfirmation>
-            ) : (
-              ""
-            )}
+            {deletePopup ? <DeleteConfirmation></DeleteConfirmation> : ""}
           </div>
         </div>
       </div>

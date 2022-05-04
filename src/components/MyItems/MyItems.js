@@ -4,22 +4,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { itemsContextApi } from "../../App";
 import auth from "../../firebase.init";
 import DeleteConfirmation from "../ManageInventories/DeleteConfirmation/DeleteConfirmation";
 
 const MyItems = () => {
   const [user] = useAuthState(auth);
-    const [myItems, setMyItems] = useState([]);
-  console.log(myItems);
-  const [popupShow, setPopupShow] = useState(false);
-  const [deleteId, setDeleteId] = useState("");
-  const [, handleUpdate] = useContext(itemsContextApi);
-
-  const confirmPopUp = (id) => {
-    setPopupShow(!popupShow);
-    setDeleteId(id);
-  };
+  const [myItems, setMyItems] = useState([]);
+  const [, handleUpdate, , , deletePopup, , popupHandler] =
+    useContext(itemsContextApi);
 
   useEffect(() => {
     const getMyItems = async () => {
@@ -29,10 +23,11 @@ const MyItems = () => {
       setMyItems(data);
     };
     getMyItems();
-  }, [user]);
+  }, [user, myItems]);
 
   return (
     <div className="py-16 px-3">
+      <ToastContainer></ToastContainer>
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between items-center gap-2 mb-5">
           <h2 className="text-2xl md:text-4xl font-extrabold text-center">
@@ -79,7 +74,7 @@ const MyItems = () => {
                 {myItems.map((item) => (
                   <tr
                     className="bg-white hover:bg-[#f2f8fe] border-b"
-                    key={item.id}
+                    key={item._id}
                   >
                     <th
                       scope="row"
@@ -106,7 +101,7 @@ const MyItems = () => {
                         <FiEdit3 className="text-2xl"></FiEdit3>
                       </button>
                       <button
-                        onClick={() => confirmPopUp(item.id)}
+                        onClick={() => popupHandler(item._id)}
                         className="text-black bg-red-200 hover:bg-red-300 p-2 rounded-full flex items-center gap-1 text-sm"
                         title="Delete Item"
                       >
@@ -117,13 +112,7 @@ const MyItems = () => {
                 ))}
               </tbody>
             </table>
-            {popupShow ? (
-              <DeleteConfirmation
-                setPopupShow={setPopupShow}
-              ></DeleteConfirmation>
-            ) : (
-              ""
-            )}
+            {deletePopup ? <DeleteConfirmation></DeleteConfirmation> : ""}
           </div>
         </div>
       </div>

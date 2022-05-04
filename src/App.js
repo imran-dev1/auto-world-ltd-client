@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./App.css";
 import AddItem from "./components/AddItem/AddItem";
 import Footer from "./components/Footer/Footer";
@@ -18,25 +19,67 @@ export const itemsContextApi = createContext();
 
 function App() {
   const [items, setItems] = useState([]);
+  const [deleteId, setDeleteId] = useState("");
+  const [deletePopup, setDeletePopup] = useState(false);
+
   const navigate = useNavigate();
+
+  //Handle Update
   const handleUpdate = (_id) => {
     navigate(`/product/${_id}`);
+  };
+
+  // Handle Delete
+  const handleDelete = (_id) => {
+    console.log("inside Delete handler");
+    const url = `http://localhost:4000/product/${_id}`;
+
+    fetch(url, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log();
+        toast.success("Item deleted!");
+        setDeletePopup(false);
+      });
+  };
+
+  //Handle Pop Up
+
+  const popupHandler = (id) => {
+    setDeletePopup(!deletePopup);
+    setDeleteId(id);
   };
 
   useEffect(() => {
     fetch("http://localhost:4000/products")
       .then((res) => res.json())
       .then((data) => setItems(data));
-  }, [items]);
+  }, [handleDelete]);
   return (
     <div>
       <Header></Header>
-      <itemsContextApi.Provider value={[items, handleUpdate]}>
+      <itemsContextApi.Provider
+        value={[
+          items,
+          handleUpdate,
+          handleDelete,
+          deleteId,
+          deletePopup,
+          setDeletePopup,
+          popupHandler,
+        ]}
+      >
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
           <Route
             path="/manage-inventories"
-            element={<ManageInventories></ManageInventories>}
+            element={
+              <RequireAuth>
+                <ManageInventories></ManageInventories>
+              </RequireAuth>
+            }
           ></Route>
           <Route
             path="/add-item"
