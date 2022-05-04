@@ -1,10 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const InventoryDetails = () => {
   const [inventory, setInventory] = useState({});
-  console.log(inventory);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const { _id } = useParams();
   useEffect(() => {
     fetch(`http://localhost:4000/product/${_id}`)
@@ -12,10 +21,30 @@ const InventoryDetails = () => {
       .then((data) => {
         setInventory(data);
       });
-  }, []);
-    
+  }, [inventory]);
+
+  const handleAddQuantity = (data) => {
+    const { quantity } = data;
+    const newQuantity = parseInt(inventory.quantity) + parseInt(quantity);
+    console.log(newQuantity);
+    fetch(`http://localhost:4000/product/${_id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        quantity: `${newQuantity}`,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+    toast.success("Quantity updated!");
+    reset();
+  };
+
   return (
     <div className="pt-24 pb-24 px-3">
+      <ToastContainer></ToastContainer>
       <div className="container mx-auto" style={{ maxWidth: "1000px" }}>
         <div className="md:flex justify-between gap-5">
           <div className="md:w-4/6">
@@ -52,20 +81,32 @@ const InventoryDetails = () => {
                 Stock quantity: {inventory.quantity}
               </p>
               <p>Restock Items:</p>
-              <form className="flex mt-1">
+              <form
+                className="flex mt-1"
+                onSubmit={handleSubmit(handleAddQuantity)}
+              >
                 <input
+                  {...register("quantity", {
+                    required: "Please add some quantity!",
+                  })}
                   className=" max-w-[150px] min-w-[80px]"
                   type="number"
                   name="quantity"
                   id="quantity"
                   placeholder="Quantity"
                 />
+
                 <input
                   className="bg-slate-700 hover:bg-slate-800 cursor-pointer text-white px-3"
                   type="submit"
                   value="Add quantity"
                 />
               </form>
+              {errors.quantity?.message && (
+                <p className="text-red-500 text-left mb-2">
+                  {errors.quantity?.message}
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -31,7 +31,6 @@ function App() {
 
   // Handle Delete
   const handleDelete = (_id) => {
-    console.log("inside Delete handler");
     const url = `http://localhost:4000/product/${_id}`;
 
     fetch(url, {
@@ -56,7 +55,7 @@ function App() {
     fetch("http://localhost:4000/products")
       .then((res) => res.json())
       .then((data) => setItems(data));
-  }, [handleDelete]);
+  }, [items]);
   return (
     <div>
       <Header></Header>
