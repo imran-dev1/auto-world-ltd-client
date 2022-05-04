@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
@@ -14,6 +13,7 @@ const InventoryDetails = () => {
     formState: { errors },
   } = useForm();
 
+  //Fetch Product Details by Id
   const { _id } = useParams();
   useEffect(() => {
     fetch(`http://localhost:4000/product/${_id}`)
@@ -23,10 +23,31 @@ const InventoryDetails = () => {
       });
   }, [inventory]);
 
+  //Handle Delivered
+  const handleDelivered = () => {
+    const newQuantity = parseInt(inventory.quantity) - 1;
+    const updatedSold = parseInt(inventory.sold) + 1;
+    fetch(`http://localhost:4000/product/${_id}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        quantity: `${newQuantity}`,
+        sold: `${updatedSold}`,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        toast.success("Item Delivered!");
+      });
+    reset();
+  };
+
+  //Add quantity handler
   const handleAddQuantity = (data) => {
     const { quantity } = data;
     const newQuantity = parseInt(inventory.quantity) + parseInt(quantity);
-    console.log(newQuantity);
     fetch(`http://localhost:4000/product/${_id}`, {
       method: "PATCH",
       body: JSON.stringify({
@@ -37,8 +58,9 @@ const InventoryDetails = () => {
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
-    toast.success("Quantity updated!");
+      .then((json) => {
+        toast.success("Quantity updated!");
+      });
     reset();
   };
 
@@ -71,9 +93,12 @@ const InventoryDetails = () => {
               <h2 className="text-3xl">Price: ${inventory.price}</h2>
             </div>
             <div className="bg-[#eef3fa] p-5 rounded-lg my-5">
-              <p className="text-xl">Sold Items: 50</p>
-              <button className="bg-indigo-200 hover:bg-indigo-300 py-2 px-5 rounded-md mt-2 flex items-center gap-1">
-                Delivered{" "}
+                          <p className="text-xl">Sold Items: {inventory.sold}</p>
+              <button
+                onClick={handleDelivered}
+                className="bg-indigo-200 hover:bg-indigo-300 py-2 px-5 rounded-md mt-2 flex items-center gap-1"
+              >
+                Delivered
               </button>
             </div>
             <div className="bg-[#eef3fa] p-5 rounded-lg my-5">

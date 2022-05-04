@@ -32,6 +32,7 @@ const AddItem = () => {
         thumbnail: thumb_url,
         price,
         quantity,
+        sold: 0,
         user_email: user.email,
       }),
       headers: {
@@ -39,7 +40,7 @@ const AddItem = () => {
       },
     })
       .then((response) => response.json())
-        .then((result) => {
+      .then((result) => {
         toast.success("Item Added");
         reset();
       });

@@ -10,7 +10,6 @@ import {
 import auth from "../../firebase.init";
 import Loading from "../Loading/Loading";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
 import GoogleLogin from "../GoogleLogin/GoogleLogin";
 
 const SignUp = () => {
