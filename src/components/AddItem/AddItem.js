@@ -48,7 +48,7 @@ const AddItem = () => {
 
   return (
     <div className="pt-24 pb-24 px-3">
-      <ToastContainer></ToastContainer>
+      <ToastContainer autoClose={2000} />
       <div className="container mx-auto" style={{ maxWidth: "700px" }}>
         <h2 className="text-2xl md:text-4xl font-extrabold mb-5 text-center">
           Add New Item

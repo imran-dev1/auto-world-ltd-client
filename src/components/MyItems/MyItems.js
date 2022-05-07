@@ -18,7 +18,7 @@ const MyItems = () => {
   useEffect(() => {
     const getMyItems = async () => {
       const email = user.email;
-      const url = `http://localhost:4000/products?user_email=${email}`;
+      const url = `http://localhost:4000/myItems?user_email=${email}`;
       const { data } = await axios.get(url);
       setMyItems(data);
     };
@@ -27,7 +27,7 @@ const MyItems = () => {
 
   return (
     <div className="py-16 px-3">
-      <ToastContainer></ToastContainer>
+      <ToastContainer autoClose={2000} />
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between items-center gap-2 mb-5">
           <h2 className="text-2xl md:text-4xl font-extrabold text-center">

@@ -42,18 +42,20 @@ const Header = () => {
                 : "opacity-0 -translate-y-3 hidden md:flex"
             } md:translate-y-0 px-5 py-10 md:p-0 rounded w-56 shadow-lg md:shadow-none  md:w-auto transition-all bg-[#ffffffeb] backdrop-blur-sm md:bg-transparent absolute right-0 top-10 md:static md:opacity-100 flex flex-col md:flex-row items-start justify-right gap-6 md:gap-8 text-md font-normal md:text-white text-black`}
           >
-            <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "md:text-indigo-400 flex items-center gap-1"
-                    : "md:hover:text-indigo-400 flex items-center gap-1"
-                }
-                to="/add-item"
-              >
-                Add Item <AiOutlinePlus className="text-lg"></AiOutlinePlus>
-              </NavLink>
-            </li>
+            {user && (
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "md:text-indigo-400 flex items-center gap-1"
+                      : "md:hover:text-indigo-400 flex items-center gap-1"
+                  }
+                  to="/add-item"
+                >
+                  Add Item <AiOutlinePlus className="text-lg"></AiOutlinePlus>
+                </NavLink>
+              </li>
+            )}
             <li>
               <NavLink
                 className={({ isActive }) =>
@@ -67,19 +69,21 @@ const Header = () => {
                 <MdOutlineInventory className="text-lg"></MdOutlineInventory>
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "md:text-indigo-400 flex items-center gap-1"
-                    : "md:hover:text-indigo-400 flex items-center gap-1"
-                }
-                to="/my-items"
-              >
-                My Items
-                <AiOutlineUnorderedList className="text-lg"></AiOutlineUnorderedList>
-              </NavLink>
-            </li>
+            {user && (
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "md:text-indigo-400 flex items-center gap-1"
+                      : "md:hover:text-indigo-400 flex items-center gap-1"
+                  }
+                  to="/my-items"
+                >
+                  My Items
+                  <AiOutlineUnorderedList className="text-lg"></AiOutlineUnorderedList>
+                </NavLink>
+              </li>
+            )}
 
             <li>
               {user ? (

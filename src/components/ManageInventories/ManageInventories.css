@@ -1,0 +1,6 @@
+.selected {
+    border-color: #6366f1;
+    color: #6366f1;
+    z-index:10;
+  }
+  

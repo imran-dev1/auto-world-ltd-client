@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import auth from "../../firebase.init";
 
 const InventoryDetails = () => {
+  const [user] = useAuthState(auth);
   const [inventory, setInventory] = useState({});
 
   const {
@@ -27,20 +30,24 @@ const InventoryDetails = () => {
   const handleDelivered = () => {
     const newQuantity = parseInt(inventory.quantity) - 1;
     const updatedSold = parseInt(inventory.sold) + 1;
-    fetch(`http://localhost:4000/product/${_id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        quantity: `${newQuantity}`,
-        sold: `${updatedSold}`,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        toast.success("Item Delivered!");
-      });
+    if (user) {
+      fetch(`http://localhost:4000/product/${_id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          quantity: `${newQuantity}`,
+          sold: `${updatedSold}`,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          toast.success("Item Delivered!");
+        });
+    } else {
+      toast.warning("Please login to make changes!");
+    }
     reset();
   };
 
@@ -48,25 +55,31 @@ const InventoryDetails = () => {
   const handleAddQuantity = (data) => {
     const { quantity } = data;
     const newQuantity = parseInt(inventory.quantity) + parseInt(quantity);
-    fetch(`http://localhost:4000/product/${_id}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        quantity: `${newQuantity}`,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        toast.success("Quantity updated!");
-      });
+    if (user) {
+      fetch(`http://localhost:4000/product/${_id}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          quantity: `${newQuantity}`,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          toast.success("Quantity updated!");
+        });
+    } else {
+      toast.warning("Please login to add quantity!");
+    }
     reset();
   };
 
   return (
     <div className="pt-24 pb-24 px-3">
-      <ToastContainer></ToastContainer>
+      <ToastContainer
+        autoClose={2000}
+      />
       <div className="container mx-auto" style={{ maxWidth: "1000px" }}>
         <div className="md:flex justify-between gap-5">
           <div className="md:w-4/6">
@@ -93,7 +106,7 @@ const InventoryDetails = () => {
               <h2 className="text-3xl">Price: ${inventory.price}</h2>
             </div>
             <div className="bg-[#eef3fa] p-5 rounded-lg my-5">
-                          <p className="text-xl">Sold Items: {inventory.sold}</p>
+              <p className="text-xl">Sold Items: {inventory.sold}</p>
               <button
                 onClick={handleDelivered}
                 className="bg-indigo-200 hover:bg-indigo-300 py-2 px-5 rounded-md mt-2 flex items-center gap-1"

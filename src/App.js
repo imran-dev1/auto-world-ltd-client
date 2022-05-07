@@ -22,6 +22,28 @@ function App() {
   const [items, setItems] = useState([]);
   const [deleteId, setDeleteId] = useState("");
   const [deletePopup, setDeletePopup] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemCount, setItemCOunt] = useState(0);
+  const [selectedPage, setSelectedPage] = useState(0);
+  const [productPerPage, setProductPerPage] = useState(10);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/productCount")
+      .then((res) => res.json())
+      .then((data) => {
+        const count = data.count;
+        setItemCOunt(count);
+        const pages = Math.ceil(count / productPerPage);
+        setPageCount(pages);
+      });
+  }, [items]);
+  useEffect(() => {
+    fetch(
+      `http://localhost:4000/products/?page=${selectedPage}&items=${productPerPage}`
+    )
+      .then((res) => res.json())
+      .then((data) => setItems(data));
+  }, [items, selectedPage, productPerPage]);
 
   const navigate = useNavigate();
 
@@ -52,11 +74,6 @@ function App() {
     setDeleteId(id);
   };
 
-  useEffect(() => {
-    fetch("http://localhost:4000/products")
-      .then((res) => res.json())
-      .then((data) => setItems(data));
-  }, [items]);
   return (
     <div>
       <Header></Header>
@@ -69,6 +86,13 @@ function App() {
           deletePopup,
           setDeletePopup,
           popupHandler,
+          pageCount,
+          setPageCount,
+          selectedPage,
+          setSelectedPage,
+          productPerPage,
+          setProductPerPage,
+          itemCount,
         ]}
       >
         <Routes>

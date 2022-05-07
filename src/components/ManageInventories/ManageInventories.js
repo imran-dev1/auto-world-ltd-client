@@ -5,19 +5,51 @@ import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { itemsContextApi } from "../../App";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
+import "./ManageInventories.css";
 
 const ManageInventories = () => {
-  const [items, handleUpdate, , , deletePopup, , popupHandler] =
-    useContext(itemsContextApi);
+  const [
+    items,
+    handleUpdate,
+    handleDelete,
+    deleteId,
+    deletePopup,
+    setDeletePopup,
+    popupHandler,
+    pageCount,
+    setPageCount,
+    selectedPage,
+    setSelectedPage,
+    productPerPage,
+    setProductPerPage,
+    itemCount,
+  ] = useContext(itemsContextApi);
 
   return (
     <div className="py-16 px-3">
-      <ToastContainer></ToastContainer>
+      <ToastContainer autoClose={2000} />
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between items-center gap-2 mb-5">
           <h2 className="text-2xl md:text-4xl font-extrabold text-center">
             Manage Inventories
           </h2>
+        </div>
+        <p className=" order-3 md:-order-none text-gray-600 text-lg ">
+          {itemCount} items
+        </p>
+        <div className="flex items-end justify-between mb-5">
+          <div>
+            <label htmlFor="products-per-page">Items per page</label>
+            <select
+              id="products-per-page"
+              className="py-1 ml-2 focus:ring-0 border-gray-200 rounded-lg"
+              onChange={(e) => setProductPerPage(e.target.value)}
+            >
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
           <div className="flex items-center gap-1 justify-end">
             <Link to="/add-item">
               <button className="flex items-center gap-1 bg-white hover:shadow-xl hover:bg-[#394150] hover:text-white py-2 px-3 rounded-lg shadow-md">
@@ -26,9 +58,6 @@ const ManageInventories = () => {
             </Link>
           </div>
         </div>
-        <p className=" order-3 md:-order-none text-gray-600 text-lg ">
-          {items.length} items
-        </p>
         <div className="mt-2">
           <div className="relative overflow-x-auto shadow-lg sm:rounded-lg">
             <table className="w-full text-left text-gray-600">
@@ -97,7 +126,26 @@ const ManageInventories = () => {
               </tbody>
             </table>
             {deletePopup ? <DeleteConfirmation></DeleteConfirmation> : ""}
-          </div>
+          </div>{" "}
+          {itemCount > 10 && (
+            <nav
+              className="gap-2 flex justify-end mt-5 "
+              aria-label="Pagination"
+            >
+              {[...Array(pageCount).keys()].map((number) => (
+                <button
+                  onClick={() => setSelectedPage(number)}
+                  key={number}
+                  aria-current="page"
+                  className={`bg-white border-gray-300 text-gray-500 relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded-lg ${
+                    selectedPage === number && "selected"
+                  }`}
+                >
+                  {number + 1}
+                </button>
+              ))}
+            </nav>
+          )}
         </div>
       </div>
     </div>
