@@ -31,7 +31,7 @@ function App() {
   const [productPerPage, setProductPerPage] = useState(10);
 
   useEffect(() => {
-    fetch("http://localhost:4000/productCount")
+    fetch("https://auto-world026.herokuapp.com/productCount")
       .then((res) => res.json())
       .then((data) => {
         const count = data.count;
@@ -42,7 +42,7 @@ function App() {
   }, [items]);
   useEffect(() => {
     fetch(
-      `http://localhost:4000/products/?page=${selectedPage}&items=${productPerPage}`
+      `https://auto-world026.herokuapp.com/products/?page=${selectedPage}&items=${productPerPage}`
     )
       .then((res) => res.json())
       .then((data) => setItems(data));
@@ -57,7 +57,7 @@ function App() {
 
   // Handle Delete
   const handleDelete = (_id) => {
-    const url = `http://localhost:4000/product/${_id}`;
+    const url = `https://auto-world026.herokuapp.com/product/${_id}`;
 
     fetch(url, {
       method: "DELETE",

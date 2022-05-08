@@ -19,7 +19,7 @@ const InventoryDetails = () => {
   //Fetch Product Details by Id
   const { _id } = useParams();
   useEffect(() => {
-    fetch(`http://localhost:4000/product/${_id}`)
+    fetch(`https://auto-world026.herokuapp.com/product/${_id}`)
       .then((res) => res.json())
       .then((data) => {
         setInventory(data);
@@ -31,7 +31,7 @@ const InventoryDetails = () => {
     const newQuantity = parseInt(inventory.quantity) - 1;
     const updatedSold = parseInt(inventory.sold) + 1;
     if (user) {
-      fetch(`http://localhost:4000/product/${_id}`, {
+      fetch(`https://auto-world026.herokuapp.com/product/${_id}`, {
         method: "PATCH",
         body: JSON.stringify({
           quantity: `${newQuantity}`,
@@ -44,11 +44,11 @@ const InventoryDetails = () => {
       })
         .then((response) => response.json())
         .then((result) => {
-            if (result.message === "success") {
-                toast.success("Quantity updated!");
-              } else {
-                toast.error("Unauthorize access");
-              }
+          if (result.message === "success") {
+            toast.success("Quantity updated!");
+          } else {
+            toast.error("Unauthorize access");
+          }
         });
     } else {
       toast.warning("Please login to make changes!");
@@ -61,7 +61,7 @@ const InventoryDetails = () => {
     const { quantity } = data;
     const newQuantity = parseInt(inventory.quantity) + parseInt(quantity);
     if (user) {
-      fetch(`http://localhost:4000/product/${_id}`, {
+      fetch(`https://auto-world026.herokuapp.com/product/${_id}`, {
         method: "PATCH",
         body: JSON.stringify({
           quantity: `${newQuantity}`,

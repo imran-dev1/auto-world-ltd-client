@@ -29,7 +29,7 @@ const Login = () => {
   };
 
   if (user) {
-    fetch("http://localhost:4000/login", {
+    fetch("https://auto-world026.herokuapp.com/login", {
       method: "POST",
       body: JSON.stringify({
         email: user.email,

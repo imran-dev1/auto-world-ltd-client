@@ -23,7 +23,7 @@ const AddItem = () => {
       quantity,
       supplier_name,
     } = data;
-    fetch("http://localhost:4000/products", {
+    fetch("https://auto-world026.herokuapp.com/products", {
       method: "POST",
       body: JSON.stringify({
         name: item_name,
