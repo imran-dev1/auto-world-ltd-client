@@ -29,6 +29,19 @@ const Login = () => {
   };
 
   if (user) {
+    fetch("http://localhost:4000/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: user.email,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem("accessToken", data.token);
+      });
     navigate(from, { replace: true });
   }
   if (loading) {

@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./App.css";
@@ -15,10 +16,12 @@ import RedirectToInventories from "./components/RedirectToInventories/RedirectTo
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import SignUp from "./components/SignUp/SignUp";
+import auth from "./firebase.init";
 
 export const itemsContextApi = createContext();
 
 function App() {
+  const [user] = useAuthState(auth);
   const [items, setItems] = useState([]);
   const [deleteId, setDeleteId] = useState("");
   const [deletePopup, setDeletePopup] = useState(false);
@@ -58,11 +61,17 @@ function App() {
 
     fetch(url, {
       method: "DELETE",
+      headers: {
+        authorization: `${user.email} ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log();
-        toast.success("Item deleted!");
+        if (result.message === "success") {
+          toast.success("Item deleted!");
+        } else {
+          toast.error("Unauthorize access  ");
+        }
         setDeletePopup(false);
       });
   };

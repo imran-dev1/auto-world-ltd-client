@@ -38,12 +38,17 @@ const InventoryDetails = () => {
           sold: `${updatedSold}`,
         }),
         headers: {
+          authorization: `${user.email} ${localStorage.getItem("accessToken")}`,
           "Content-type": "application/json; charset=UTF-8",
         },
       })
         .then((response) => response.json())
-        .then((json) => {
-          toast.success("Item Delivered!");
+        .then((result) => {
+            if (result.message === "success") {
+                toast.success("Quantity updated!");
+              } else {
+                toast.error("Unauthorize access");
+              }
         });
     } else {
       toast.warning("Please login to make changes!");
@@ -62,12 +67,17 @@ const InventoryDetails = () => {
           quantity: `${newQuantity}`,
         }),
         headers: {
+          authorization: `${user.email} ${localStorage.getItem("accessToken")}`,
           "Content-type": "application/json; charset=UTF-8",
         },
       })
         .then((response) => response.json())
-        .then((json) => {
-          toast.success("Quantity updated!");
+        .then((result) => {
+          if (result.message === "success") {
+            toast.success("Quantity updated!");
+          } else {
+            toast.error("Unauthorize access");
+          }
         });
     } else {
       toast.warning("Please login to add quantity!");
@@ -77,9 +87,7 @@ const InventoryDetails = () => {
 
   return (
     <div className="pt-24 pb-24 px-3">
-      <ToastContainer
-        autoClose={2000}
-      />
+      <ToastContainer autoClose={2000} />
       <div className="container mx-auto" style={{ maxWidth: "1000px" }}>
         <div className="md:flex justify-between gap-5">
           <div className="md:w-4/6">

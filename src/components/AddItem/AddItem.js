@@ -36,13 +36,18 @@ const AddItem = () => {
         user_email: user.email,
       }),
       headers: {
+        authorization: `${user.email} ${localStorage.getItem("accessToken")}`,
         "Content-type": "application/json; charset=UTF-8",
       },
     })
       .then((response) => response.json())
       .then((result) => {
-        toast.success("Item Added");
-        reset();
+        if (result.message === "success") {
+          toast.success("Item Added");
+          reset();
+        } else {
+          toast.error("Unauthorize access");
+        }
       });
   };
 
