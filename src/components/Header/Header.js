@@ -42,6 +42,30 @@ const Header = () => {
                 : "opacity-0 -translate-y-3 hidden md:flex"
             } md:translate-y-0 px-5 py-10 md:p-0 rounded w-56 shadow-lg md:shadow-none  md:w-auto transition-all bg-[#ffffffeb] backdrop-blur-sm md:bg-transparent absolute right-0 top-10 md:static md:opacity-100 flex flex-col md:flex-row items-start justify-right gap-6 md:gap-8 text-md font-normal md:text-white text-black`}
           >
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "md:text-indigo-400 flex items-center gap-1"
+                    : "md:hover:text-indigo-400 flex items-center gap-1"
+                }
+                to="/"
+              >
+                Home
+              </NavLink>
+                      </li>
+                      <li>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "md:text-indigo-400 flex items-center gap-1"
+                    : "md:hover:text-indigo-400 flex items-center gap-1"
+                }
+                to="/blogs"
+              >
+                Blogs
+              </NavLink>
+            </li>
             {user && (
               <li>
                 <NavLink
