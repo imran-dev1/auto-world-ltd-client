@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import auth from "../../firebase.init";
 import Loading from "../Loading/Loading";
@@ -124,15 +124,6 @@ const InventoryDetails = () => {
                 <h2 className="text-3xl">Price: ${inventory.price}</h2>
               </div>
               <div className="bg-[#eef3fa] p-5 rounded-lg my-5">
-                <p className="text-xl">Sold Items: {inventory.sold}</p>
-                <button
-                  onClick={handleDelivered}
-                  className="bg-indigo-200 hover:bg-indigo-300 py-2 px-5 rounded-md mt-2 flex items-center gap-1"
-                >
-                  Delivered
-                </button>
-              </div>
-              <div className="bg-[#eef3fa] p-5 rounded-lg my-5">
                 <p className="mb-5 text-xl">
                   Stock quantity: {inventory.quantity}
                 </p>
@@ -163,6 +154,23 @@ const InventoryDetails = () => {
                     {errors.quantity?.message}
                   </p>
                 )}
+              </div>
+              <div className="bg-[#eef3fa] p-5 rounded-lg my-5">
+                <p className="text-xl">Sold Items: {inventory.sold}</p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleDelivered}
+                    className="bg-indigo-200 text-sm hover:bg-indigo-300 py-2 px-5 rounded-md mt-2 flex items-center gap-1"
+                  >
+                    Delivered
+                  </button>
+                  <Link
+                    className="bg-slate-700 hover:bg-slate-800 py-2 px-5 rounded-md mt-2 flex items-center gap-1 text-sm text-white"
+                    to={process.env.PUBLIC_URL + "/manage-inventories"}
+                  >
+                    Manage Inventories
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

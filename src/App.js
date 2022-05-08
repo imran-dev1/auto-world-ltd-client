@@ -140,7 +140,11 @@ function App() {
           ></Route>
           <Route
             path="/product/:_id"
-            element={<InventoryDetails></InventoryDetails>}
+            element={
+              <RequireAuth>
+                <InventoryDetails></InventoryDetails>
+              </RequireAuth>
+            }
           ></Route>
           <Route path="/login" element={<Login></Login>}></Route>
           <Route

@@ -1,0 +1,7 @@
+.counter{
+    background-image: url(../../../images/counter-bg.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    background-attachment: fixed;
+}
