@@ -4,6 +4,7 @@ import { FiEdit3 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { itemsContextApi } from "../../App";
+import Loading from "../Loading/Loading";
 import DeleteConfirmation from "./DeleteConfirmation/DeleteConfirmation";
 import "./ManageInventories.css";
 
@@ -23,11 +24,13 @@ const ManageInventories = () => {
     productPerPage,
     setProductPerPage,
     itemCount,
+    loading,
   ] = useContext(itemsContextApi);
 
   return (
     <div className="py-16 px-3">
       <ToastContainer autoClose={2000} />
+      {!loading && <Loading></Loading>}
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between items-center gap-2 mb-5">
           <h2 className="text-2xl md:text-4xl font-extrabold text-center">

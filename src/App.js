@@ -29,7 +29,9 @@ function App() {
   const [itemCount, setItemCOunt] = useState(0);
   const [selectedPage, setSelectedPage] = useState(0);
   const [productPerPage, setProductPerPage] = useState(10);
+  const [loading, setLoading] = useState(false);
 
+  //Get product count
   useEffect(() => {
     fetch("https://auto-world026.herokuapp.com/productCount")
       .then((res) => res.json())
@@ -40,12 +42,17 @@ function App() {
         setPageCount(pages);
       });
   }, [items]);
+
+  //Fetch products with products per page & pagination page number
   useEffect(() => {
     fetch(
       `https://auto-world026.herokuapp.com/products/?page=${selectedPage}&items=${productPerPage}`
     )
       .then((res) => res.json())
-      .then((data) => setItems(data));
+      .then((data) => {
+        setLoading(true);
+        setItems(data);
+      });
   }, [items, selectedPage, productPerPage]);
 
   const navigate = useNavigate();
@@ -102,6 +109,7 @@ function App() {
           productPerPage,
           setProductPerPage,
           itemCount,
+          loading,
         ]}
       >
         <Routes>
