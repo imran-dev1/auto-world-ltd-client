@@ -32,13 +32,16 @@ const MyItems = () => {
     <div className="py-16 px-3">
       <ToastContainer autoClose={2000} />
       {!loading && <Loading></Loading>}
-      {myItems.length}
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-between items-center gap-2 mb-5">
           <h2 className="text-2xl md:text-4xl font-extrabold text-center">
             My Items
           </h2>
-
+        </div>
+        <div className="flex items-end justify-between mb-5">
+          <p className=" order-3 md:-order-none text-gray-600 text-lg ">
+            {myItems.length} items
+          </p>
           <div className="flex items-center gap-1 justify-end">
             <Link to="/add-item">
               <button className="flex items-center gap-1 bg-white hover:shadow-xl hover:bg-[#394150] hover:text-white py-2 px-3 rounded-lg shadow-md">
@@ -47,9 +50,6 @@ const MyItems = () => {
             </Link>
           </div>
         </div>
-        <p className=" order-3 md:-order-none text-gray-600 text-lg ">
-          {myItems.length} items
-        </p>
         <div className="mt-2">
           <div className="relative overflow-x-auto shadow-lg sm:rounded-lg">
             <table className="w-full text-left text-gray-600">

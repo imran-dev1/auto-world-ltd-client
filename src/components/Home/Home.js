@@ -1,5 +1,6 @@
 import React from "react";
 import Banner from "./Banner/Banner";
+import CallToAction from "./CallToAction/CallToAction";
 import ItemsSection from "./ItemsSection/ItemsSection";
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
     <div>
       <Banner></Banner>
       <ItemsSection></ItemsSection>
+      <CallToAction></CallToAction>
     </div>
   );
 };

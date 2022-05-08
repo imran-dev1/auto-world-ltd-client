@@ -36,7 +36,7 @@ const Banner = () => {
               className="bg-indigo-700 hover:bg-indigo-600 text-white py-2 px-3 rounded-lg inline-block"
               to="/login"
             >
-              Login{" "}
+              Login
               <MdLogin className="text-lg float-right mt-1 ml-1"></MdLogin>
             </Link>
           )}
